@@ -40,5 +40,6 @@ jobs:
         with:
           allowUpdates: true
           omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
           body: ${{ github.event.head_commit.message }}
           tag: ${{ steps.semver.outputs.major }}
