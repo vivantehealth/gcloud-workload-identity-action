@@ -19,5 +19,6 @@ runs:
         workload_identity_provider: ${{ inputs.workload_identity_provider }}
         service_account: ${{ inputs.gcp_service_account }}
     - name: Gcloud auth
+      shell: bash
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
