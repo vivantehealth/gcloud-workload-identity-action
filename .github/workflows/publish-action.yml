@@ -38,5 +38,6 @@ jobs:
       - name: Update major version
         uses: ncipollo/release-action@v1
         with:
+          allowUpdates: true
           body: ${{ github.event.head_commit.message }}
           tag: ${{ steps.semver.outputs.major }}
