@@ -1,19 +1,23 @@
 name: 'The named action'
 description: "Does a useful thing"
 inputs:
-  github_token:
-    description: GitHub token to use
+  workload_identity_provider:
+    description: GCP Workload Identity Pool Provider ID (e.g. projects/<project-number>/locations/global/workloadIdentityPools/<pool>/providers/<id>)
     required: true
-outputs:
-  a_value:
-    description: A value that may be useful to another step
-    value: steps.date.outputs.date    
+  gcp_service_account:
+    description: GCP service Ac
+    required: true
 runs:
   using: "composite"
   steps:
-    - name: Get current time
-      id: date
-      shell: bash
-      run: |
-        time=$(date)
-        echo "::set-output name=time::$(echo $time)"
+    - name: Set up gcloud SDK
+      uses: google-github-actions/setup-gcloud@master
+    - name: Workload Identity Auth
+      id: auth
+      uses: google-github-actions/auth@v0.4.1
+      with:
+        workload_identity_provider: ${{ inputs.workload_identity_provider }}
+        service_account: ${{ inputs.gcp_service_account }}
+    - name: Gcloud auth
+      run: |-
+        gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
