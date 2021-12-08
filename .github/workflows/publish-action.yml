@@ -39,5 +39,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
+          omitBodyDuringUpdate: true
+          commit: github.sha
           body: ${{ github.event.head_commit.message }}
           tag: ${{ steps.semver.outputs.major }}
