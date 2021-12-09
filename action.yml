@@ -12,12 +12,16 @@ runs:
   steps:
     - name: Set up gcloud SDK
       uses: google-github-actions/setup-gcloud@master
+    - name: Base64 decode params and set as env vars
+      run: |
+        echo "WORKLOAD_IDENTITY_PROVIDER=$(echo -n ${{ inputs.base64_workload_identity_provider}} | base64 -d) >> $GITHUB_ENV
+        echo "GCP_SERVICE_ACCOUNT=$(echo -n ${{ inputs.base64_gcp_service_account}} | base64 -d) >> $GITHUB_ENV
     - name: Workload Identity Auth
       id: auth
       uses: google-github-actions/auth@v0.4.1
       with:
-        workload_identity_provider: ${{ inputs.workload_identity_provider }}
-        service_account: ${{ inputs.gcp_service_account }}
+        workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
     - name: Gcloud auth
       shell: bash
       run: |-
