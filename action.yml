@@ -1,10 +1,10 @@
 name: 'The named action'
 description: "Does a useful thing"
 inputs:
-  workload_identity_provider:
+  base64_workload_identity_provider:
     description: GCP Workload Identity Pool Provider ID (e.g. projects/<project-number>/locations/global/workloadIdentityPools/<pool>/providers/<id>)
     required: true
-  gcp_service_account:
+  base64_gcp_service_account:
     description: GCP service Ac
     required: true
 runs:
