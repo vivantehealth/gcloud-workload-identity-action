@@ -6,9 +6,9 @@ on:
       - "tmp"
 
 jobs:
-  deploy-uat:
+  deploy-dev:
     uses: vivantehealth/github-actions-workflows/.github/workflows/tf-deploy.yml@tf-deploy
     with:
-      env: uat
+      env: dev
     secrets:
       base64-gcp-service-account: ${{ secrets.BASE64_GCP_SERVICE_ACCOUNT }}
