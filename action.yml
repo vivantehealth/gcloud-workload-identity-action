@@ -11,7 +11,7 @@ runs:
   using: "composite"
   steps:
     - name: Set up gcloud SDK
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v0
     - name: Base64 decode params and set as env vars
       shell: bash
       run: |
