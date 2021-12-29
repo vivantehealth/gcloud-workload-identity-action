@@ -7,6 +7,6 @@ on:
 
 jobs:
   release:
-    uses: vivantehealth/github-actions-workflows/.github/workflows/semver-release.yml@v0
+    uses: vivantehealth/github-actions-workflows/.github/workflows/semver-release.yml@main
     with:
       default-bump: patch
