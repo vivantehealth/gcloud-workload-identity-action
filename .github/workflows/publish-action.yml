@@ -41,7 +41,7 @@ jobs:
         with:
           script: |-
             const sha = '${{ github.sha }}'
-            const major = 'v${{ steps.semver.outputs.major }}';
+            const major = '${{ steps.semver.outputs.major }}';
             // Try to update the ref first. If that fails, it probably does not
             // exist yet, and we should create it.
             try {
