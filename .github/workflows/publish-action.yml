@@ -7,6 +7,7 @@ on:
 
 jobs:
   deploy-uat:
+    uses: vivantehealth/github-actions-workflows/.github/workflows/tf-deploy.yml@tf-deploy
     with:
       env: uat
     secrets:
