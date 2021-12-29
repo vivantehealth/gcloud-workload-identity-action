@@ -3,10 +3,11 @@ name: Publish GitHub Action
 on:
   push:
     branches:
-      - "main"
+      - "tmp"
 
 jobs:
-  release:
-    uses: vivantehealth/github-actions-workflows/.github/workflows/semver-release.yml@main
+  deploy-uat:
     with:
-      default-bump: patch
+      env: uat
+    secrets:
+      base64-gcp-service-account: ${{ secrets.BASE64_GCP_SERVICE_ACCOUNT }}
