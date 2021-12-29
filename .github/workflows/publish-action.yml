@@ -35,16 +35,32 @@ jobs:
           MAJOR="${MINOR%.*}"
           echo "::set-output name=major::$(echo $MAJOR)"
           echo "::set-output name=minor::$(echo $MINOR)"
-      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      # from https://github.com/google-github-actions/setup-gcloud/blob/6a46c264e16f6bfca990b7e920290d4a8f8dba4e/.github/workflows/release.yml
+      - name: 'Update floating tag'
+        if: '${{ steps.release.outputs.release_created }}'
+        uses: 'actions/github-script@v5'
         with:
-          tag_name: ${{ steps.semver.outputs.major }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Update major version
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          omitBodyDuringUpdate: true
-          omitNameDuringUpdate: true
-          body: ${{ github.event.head_commit.message }}
-          tag: ${{ steps.semver.outputs.major }}
+          script: |-
+            const sha = '${{ github.sha }}'
+            const major = 'v${{ steps.semver.outputs.major }}';
+            // Try to update the ref first. If that fails, it probably does not
+            // exist yet, and we should create it.
+            try {
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `tags/${major}`,
+                sha: sha,
+                force: true,
+              });
+              core.info(`Updated ${major} to ${sha}`);
+            } catch(err) {
+              core.warning(`Failed to create ${major}: ${err}`);
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/tags/${major}`,
+                sha: sha,
+              });
+              core.info(`Created ${major} at ${sha}`);
+            }
