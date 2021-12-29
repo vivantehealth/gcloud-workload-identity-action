@@ -37,7 +37,6 @@ jobs:
           echo "::set-output name=minor::$(echo $MINOR)"
       # from https://github.com/google-github-actions/setup-gcloud/blob/6a46c264e16f6bfca990b7e920290d4a8f8dba4e/.github/workflows/release.yml
       - name: 'Update floating tag'
-        if: '${{ steps.release.outputs.release_created }}'
         uses: 'actions/github-script@v5'
         with:
           script: |-
