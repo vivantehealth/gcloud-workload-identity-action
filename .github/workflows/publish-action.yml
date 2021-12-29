@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    name: Release semver
+    name: Publish Action
     uses: vivantehealth/github-actions-workflows/.github/workflows/semver-release.yml@v0
     with:
       default-bump: patch
