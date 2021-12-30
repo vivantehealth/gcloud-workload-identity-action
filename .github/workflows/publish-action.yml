@@ -1,3 +1,6 @@
+# When a commit is made to main, perform a GitHub release, bumping the semantic
+# version. Defaults to `default-bump` param, override with
+# `#major`/`#minor`/`#patch` in the commit message
 name: Publish GitHub Action
 
 on:
@@ -7,6 +10,12 @@ on:
 
 jobs:
   release:
-    uses: vivantehealth/github-actions-workflows/.github/workflows/semver-release.yml@v0
-    with:
-      default-bump: patch
+    name: GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: GitHub semver release
+        uses: vivantehealth/github-semver-release-action@v0
+        with:
+          default-bump: patch
