@@ -23,7 +23,14 @@ runs:
       with:
         workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
         service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+    - name: Debug gcloud auth
+      shell: bash
+      run: gcloud auth list
     - name: Gcloud auth
       shell: bash
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+      #"
+    - name: Debug gcloud auth
+      shell: bash
+      run: gcloud auth list
