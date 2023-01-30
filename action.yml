@@ -23,6 +23,8 @@ runs:
         service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
     - name: 'Set up Cloud SDK'
       uses: google-github-actions/setup-gcloud@v1
+      with:
+        install_components: 'gke-gcloud-auth-plugin'
     - name: Debug gcloud auth
       shell: bash
       run: gcloud auth list
