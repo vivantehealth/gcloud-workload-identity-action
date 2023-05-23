@@ -1,26 +1,21 @@
 name: 'Authenticate to Google Cloud'
 description: 'Authenticate to Google Cloud with GitHub Actions OIDC tokens and Workload Identity Federation and setup gcloud'
 inputs:
-  base64_workload_identity_provider:
+  workload_identity_provider:
     description: GCP Workload Identity Pool Provider ID (e.g. projects/<project-number>/locations/global/workloadIdentityPools/<pool>/providers/<id>)
     required: true
-  base64_gcp_service_account:
+  gcp_service_account:
     description: GCP service Account
     required: true
 runs:
   using: "composite"
   steps:
-    - name: Base64 decode params and set as env vars
-      shell: bash
-      run: |
-        echo "WORKLOAD_IDENTITY_PROVIDER=$(echo -n ${{ inputs.base64_workload_identity_provider}} | base64 -d)" >> $GITHUB_ENV
-        echo "GCP_SERVICE_ACCOUNT=$(echo -n ${{ inputs.base64_gcp_service_account}} | base64 -d)" >> $GITHUB_ENV
     - name: 'Authenticate to Google Cloud'
       id: auth
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
-        service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+        workload_identity_provider: ${{ inputs.base64_workload_identity_provider}}
+        service_account: ${{ inputs.base64_gcp_service_account }}
     - name: 'Set up Cloud SDK'
       uses: google-github-actions/setup-gcloud@v1
     - name: Debug gcloud auth
