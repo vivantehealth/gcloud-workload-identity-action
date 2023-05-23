@@ -7,6 +7,26 @@ inputs:
   gcp_service_account:
     description: GCP service Account
     required: true
+outputs:
+  project_id:
+    description: |-
+      Provided or extracted value for the Google Cloud project ID.
+  credentials_file_path:
+    description: |-
+      Path on the local filesystem where the generated credentials file resides.
+      This is only available if "create_credentials_file" was set to true.
+  access_token:
+    description: |-
+      The Google Cloud access token for calling other Google Cloud APIs. This is
+      only available when "token_format" is "access_token".
+  access_token_expiration:
+    description: |-
+      The RFC3339 UTC "Zulu" format timestamp for the access token. This is only
+      available when "token_format" is "access_token".
+  id_token:
+    description: |-
+      The Google Cloud ID token. This is only available when "token_format" is
+      "id_token".
 runs:
   using: "composite"
   steps:
@@ -16,6 +36,14 @@ runs:
       with:
         workload_identity_provider: ${{ inputs.workload_identity_provider}}
         service_account: ${{ inputs.gcp_service_account }}
+    - name: Set outputs
+      shell: bash
+      run: |
+        echo project_id="${{ steps.auth.outputs.project_id }}" >> $GITHUB_OUTPUT
+        echo credentials_file_path="${{ steps.auth.outputs.credentials_file_path }}" >> $GITHUB_OUTPUT
+        echo access_token="${{ steps.auth.outputs.access_token }}" >> $GITHUB_OUTPUT
+        echo access_token_expiration="${{ steps.auth.outputs.access_token_expiration }}" >> $GITHUB_OUTPUT
+        echo id_token="${{ steps.auth.outputs.id_token }}" >> $GITHUB_OUTPUT
     - name: 'Set up Cloud SDK'
       uses: google-github-actions/setup-gcloud@v1
     - name: Debug gcloud auth
