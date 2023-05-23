@@ -14,8 +14,8 @@ runs:
       id: auth
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ inputs.base64_workload_identity_provider}}
-        service_account: ${{ inputs.base64_gcp_service_account }}
+        workload_identity_provider: ${{ inputs.workload_identity_provider}}
+        service_account: ${{ inputs.gcp_service_account }}
     - name: 'Set up Cloud SDK'
       uses: google-github-actions/setup-gcloud@v1
     - name: Debug gcloud auth
