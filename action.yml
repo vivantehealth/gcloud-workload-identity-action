@@ -46,6 +46,8 @@ runs:
         echo id_token="${{ steps.auth.outputs.id_token }}" >> $GITHUB_OUTPUT
     - name: 'Set up Cloud SDK'
       uses: google-github-actions/setup-gcloud@v1
+      with:
+        install_components: 'gke-gcloud-auth-plugin'
     - name: Debug gcloud auth
       shell: bash
       run: gcloud auth list
