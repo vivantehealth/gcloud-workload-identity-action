@@ -45,7 +45,7 @@ runs:
         echo access_token_expiration="${{ steps.auth.outputs.access_token_expiration }}" >> $GITHUB_OUTPUT
         echo id_token="${{ steps.auth.outputs.id_token }}" >> $GITHUB_OUTPUT
     - name: 'Set up Cloud SDK'
-      uses: google-github-actions/setup-gcloud@v1
+      uses: google-github-actions/setup-gcloud@v2
     - name: Debug gcloud auth
       shell: bash
       run: gcloud auth list
