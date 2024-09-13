@@ -10,7 +10,7 @@ inputs:
   only_auth:
     description: Set to true to skip setting up gcloud SDK and just do workload ID auth
     required: false
-    default: false
+    default: "false"
 outputs:
   project_id:
     description: |-
@@ -49,7 +49,7 @@ runs:
         echo access_token_expiration="${{ steps.auth.outputs.access_token_expiration }}" >> $GITHUB_OUTPUT
         echo id_token="${{ steps.auth.outputs.id_token }}" >> $GITHUB_OUTPUT
     - name: 'Set up Cloud SDK'
-      if: "${{ !github.event.inputs.only_auth }}"
+      if: ${{ github.event.inputs.only_auth != "true" }}
       uses: google-github-actions/setup-gcloud@v2
     - name: Debug gcloud auth
       shell: bash
