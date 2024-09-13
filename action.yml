@@ -49,7 +49,7 @@ runs:
         echo access_token_expiration="${{ steps.auth.outputs.access_token_expiration }}" >> $GITHUB_OUTPUT
         echo id_token="${{ steps.auth.outputs.id_token }}" >> $GITHUB_OUTPUT
     - name: 'debug'
-      if: ${{ (github.event.inputs.only_auth != 'true') && (github.event.inputs.only_auth != true) }}
+      if: ${{ inputs.only_auth != 'true' }}
       shell: bash
       run: echo only_auth=${{ github.event.inputs.only_auth }}
     - name: 'Set up Cloud SDK'
