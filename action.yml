@@ -7,10 +7,10 @@ inputs:
   gcp_service_account:
     description: GCP service Account
     required: true
-  #only_auth:
-  #  description: Set to true to skip setting up gcloud SDK and just do workload ID auth
-  #  required: false
-  #  default: "false"
+  use_system_gcloud:
+    description: Set to false to install latest gcloud from web. False is required in order to install additional components
+    required: false
+    default: "true"
 outputs:
   project_id:
     description: |-
@@ -51,6 +51,9 @@ runs:
     - name: 'Set up Cloud SDK'
       #if: ${{ inputs.only_auth != 'true' }}
       uses: google-github-actions/setup-gcloud@v2
+      with:
+        # Save ~20 seconds by using the gcloud that ships with the default github actions runner (n)
+        skip_install: ${{ inputs.use_system_gcloud }}
     - name: Debug gcloud auth
       shell: bash
       run: gcloud auth list
