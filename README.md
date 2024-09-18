@@ -1,4 +1,4 @@
-# repo-name
+# gcloud-workload-identity-action
 
 Suggested use:
 
