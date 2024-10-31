@@ -10,7 +10,7 @@ inputs:
   use_system_gcloud:
     description: Set to false to install latest gcloud from web. False is required in order to install additional components
     required: false
-    default: "true"
+    default: "false"
 outputs:
   project_id:
     description: |-
