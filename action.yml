@@ -50,7 +50,7 @@ runs:
         echo id_token="${{ steps.auth.outputs.id_token }}" >> $GITHUB_OUTPUT
     - name: 'Set up Cloud SDK'
       #if: ${{ inputs.only_auth != 'true' }}
-      uses: google-github-actions/setup-gcloud@v2
+      uses: google-github-actions/setup-gcloud@v3
       with:
         # Save ~20 seconds by using the gcloud that ships with the default github actions runner (n)
         skip_install: ${{ inputs.use_system_gcloud }}
